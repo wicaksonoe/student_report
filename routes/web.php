@@ -11,6 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Auth::routes();
+
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'profile'], function () {
+    Route::get('/', 'ProfileController@editProfile')->name('profile');
+    Route::post('/', 'ProfileController@updateProfile')->name('profile.update');
 });
