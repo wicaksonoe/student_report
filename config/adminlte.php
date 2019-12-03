@@ -130,9 +130,20 @@ return [
     'menu' => [
         ['header' => 'main_navigation'],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-file',
+            'text'        => 'Siswa',
+            'icon'        => 'fas fa-fw fa-users',
+            'submenu'     => [
+                [
+                    'text'  => 'Daftar Siswa',
+                    'icon'        => 'fas fa-fw fa-list',
+                    'url'   => 'student',
+                ],
+                [
+                    'text'  => 'Tambah Siswa',
+                    'icon'  => 'fas fa-fw fa-user-plus',
+                    'url'   => 'student/create',
+                ],
+            ],
         ],
         ['header' => 'account_settings'],
         [

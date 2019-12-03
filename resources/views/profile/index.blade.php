@@ -13,6 +13,18 @@
                         <h1 class="box-title">Profile</h1>
                     </div>
                     <div class="box-body">
+                        @if ($errors->any() || session('error'))
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    @if (session('error'))
+                                        <li>{{ session('error') }}</li>
+                                    @endif
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="form-group">
@@ -49,12 +61,4 @@
             </div>
         </div>
     </div>
-@stop
-
-@section('js')
-    <script>
-        @if (session('error'))
-            window.alert('{{ session('error') }}');
-        @endif
-    </script>
 @stop

@@ -23,3 +23,5 @@ Route::group(['prefix' => 'profile'], function () {
     Route::get('/', 'ProfileController@editProfile')->name('profile');
     Route::post('/', 'ProfileController@updateProfile')->name('profile.update');
 });
+
+Route::resource('student', 'StudentController');
