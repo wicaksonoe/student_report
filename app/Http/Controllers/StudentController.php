@@ -25,7 +25,65 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('student.create');
+        $input = [
+            'nis' => [
+                'type' => 'text',
+                'label' => 'NIS',
+                'error' => 'NIS harus diisi.'
+            ],
+            'name' => [
+                'type' => 'text',
+                'label' => 'Nama Lengkap',
+                'error' => 'Nama lengkap harus diisi.'
+            ],
+            'tahun_masuk' => [
+                'type' => 'number',
+                'label' => 'Tahun Masuk',
+                'error' => 'Tahun masuk harus diisi.'
+            ],
+            'tempat_lahir' => [
+                'type' => 'text',
+                'label' => 'Tempat Lahir',
+                'error' => 'Tempat lahir harus diisi.'
+            ],
+            'tgl_lahir' => [
+                'type' => 'date',
+                'label' => 'Tanggal Lahir',
+                'error' => 'Tanggal lahir harus diisi.'
+            ],
+            'nama_ayah' => [
+                'type' => 'text',
+                'label' => 'Nama Ayah',
+                'error' => 'Nama ayah harus diisi.'
+            ],
+            'nama_ibu' => [
+                'type' => 'text',
+                'label' => 'Nama Ibu',
+                'error' => 'Nama ibu harus diisi.'
+            ],
+            'no_hp_ortu' => [
+                'type' => 'number',
+                'label' => 'Nomor Telepon Orang Tua',
+                'error' => 'nomor telepon orang tua harus diisi.'
+            ],
+            'alamat' => [
+                'type' => 'textarea',
+                'label' => 'Alamat Tempat Tinggal',
+                'error' => 'Alamat tempat tinggal harus diisi.'
+            ],
+            'no_hp' => [
+                'type' => 'number',
+                'label' => 'Nomor Telepon Siswa',
+                'error' => 'Nomor telepon siswa harus diisi'
+            ],
+            'photo' => [
+                'type' => 'file',
+                'label' => 'Foto Profil',
+                'error' => 'Foto profil harus diisi.'
+            ],
+        ];
+
+        return view('student.create', compact('input'));
     }
 
     /**
