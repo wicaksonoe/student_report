@@ -130,20 +130,19 @@ return [
     'menu' => [
         ['header' => 'main_navigation'],
         [
-            'text'        => 'Siswa',
+						'text'        => 'Kelola Jadwal',
+						'url'					=> '#',
+            'icon'        => 'fas fa-fw fa-list-alt',
+        ],
+        [
+						'text'        => 'Kelola Siswa',
+						'url'					=> 'student',
             'icon'        => 'fas fa-fw fa-users',
-            'submenu'     => [
-                [
-                    'text'  => 'Daftar Siswa',
-                    'icon'        => 'fas fa-fw fa-list',
-                    'url'   => 'student',
-                ],
-                [
-                    'text'  => 'Tambah Siswa',
-                    'icon'  => 'fas fa-fw fa-user-plus',
-                    'url'   => 'student/create',
-                ],
-            ],
+        ],
+        [
+						'text'        => 'Kelola Nilai Siswa',
+						'url'					=> '#',
+            'icon'        => 'fas fa-fw fa-chart-line',
         ],
         ['header' => 'account_settings'],
         [

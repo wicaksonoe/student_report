@@ -20,8 +20,16 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'profile'], function () {
-    Route::get('/', 'ProfileController@editProfile')->name('profile');
-    Route::post('/', 'ProfileController@updateProfile')->name('profile.update');
+	Route::get('/', 'ProfileController@editProfile')->name('profile');
+	Route::post('/', 'ProfileController@updateProfile')->name('profile.update');
 });
 
-Route::resource('student', 'StudentController');
+Route::group(['prefix' => 'student'], function () { 
+	Route::get('/', 'StudentController@index')->name('student.index');
+	Route::post('/', 'StudentController@store')->name('student.store');
+	Route::post('/update', 'StudentController@update')->name('student.update');
+	Route::get('/all', 'StudentController@showAll')->name('student.show');
+	Route::get('/{student}', 'StudentController@show')->name('student.detail');
+	Route::delete('/{student}', 'StudentController@destroy')->name('student.destroy');
+});
+// Route::resource('student', 'StudentController');

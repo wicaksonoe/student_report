@@ -25,5 +25,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];
+		];
+		
+		public function kelas()
+		{
+			return $this->hasOne('App\Group', 'id', 'group_id');
+		}
 }

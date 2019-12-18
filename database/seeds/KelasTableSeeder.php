@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class KelasSeeder extends Seeder
+class KelasTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     protected $fillable = [
-        'nis',
-        'name',
+				'nis',
+				'group_id',
+				'name',
+				'jenis_kelamin',
         'tahun_masuk',
         'tempat_lahir',
         'tgl_lahir',
@@ -18,5 +20,10 @@ class Student extends Model
         'alamat',
         'no_hp',
         'photo',
-    ];
+		];
+		
+		protected $hidden = [
+			'created_at',
+			'updated_at',
+		];
 }
