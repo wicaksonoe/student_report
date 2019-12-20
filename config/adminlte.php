@@ -167,7 +167,7 @@ return [
 		],
 		[
 			'text'        => 'Kelola Guru',
-			'url'					=> '#',
+			'url'					=> 'guru',
 			'icon'        => 'fas fa-fw fa-chalkboard-teacher',
 			'can'					=> 'pengurus',
 		],

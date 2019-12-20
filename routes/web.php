@@ -72,5 +72,10 @@ Route::prefix('kelas')
 Route::prefix('guru')
 	->middleware(['auth', 'pengurusMiddleware'])
 	->group(function() {
-		
+		Route::get('/', 'TeacherController@index')->name('teacher.index');
+		Route::post('/', 'TeacherController@store')->name('teacher.store');
+		Route::get('/edit/{method}/{id}', 'TeacherController@edit')->name('teacher.edit');
+		Route::delete('/delete/{id}', 'TeacherController@destroy')->name('teacher.destroy');
+		Route::get('/data/{method}', 'TeacherController@data');
+		Route::get('/message/{method}/{id}', 'TeacherController@message');
 	});
