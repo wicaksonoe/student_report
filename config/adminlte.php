@@ -2,7 +2,7 @@
 
 return [
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Title
     |--------------------------------------------------------------------------
@@ -13,13 +13,13 @@ return [
     |
     */
 
-    'title' => 'Sistem Raport',
+	'title' => 'Sistem Raport',
 
-    'title_prefix' => '',
+	'title_prefix' => '',
 
-    'title_postfix' => '',
+	'title_postfix' => '',
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Logo
     |--------------------------------------------------------------------------
@@ -30,11 +30,11 @@ return [
     |
     */
 
-    'logo' => '<b>Sis</b>PoSi',
+	'logo' => '<b>Sis</b>PoSi',
 
-    'logo_mini' => '<b>S</b>PS',
+	'logo_mini' => '<b>S</b>PS',
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Skin Color
     |--------------------------------------------------------------------------
@@ -45,9 +45,9 @@ return [
     |
     */
 
-    'skin' => 'blue',
+	'skin' => 'blue',
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Layout
     |--------------------------------------------------------------------------
@@ -58,9 +58,9 @@ return [
     |
     */
 
-    'layout' => null,
+	'layout' => null,
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Collapse Sidebar
     |--------------------------------------------------------------------------
@@ -71,9 +71,9 @@ return [
     |
     */
 
-    'collapse_sidebar' => false,
+	'collapse_sidebar' => false,
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Control Sidebar (Right Sidebar)
     |--------------------------------------------------------------------------
@@ -89,12 +89,12 @@ return [
     |
     */
 
-    'right_sidebar' => false,
-    'right_sidebar_icon' => 'fas fa-cogs',
-    'right_sidebar_theme' => 'dark',
-    'right_sidebar_slide' => true,
+	'right_sidebar' => false,
+	'right_sidebar_icon' => 'fas fa-cogs',
+	'right_sidebar_theme' => 'dark',
+	'right_sidebar_slide' => true,
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | URLs
     |--------------------------------------------------------------------------
@@ -106,17 +106,17 @@ return [
     |
     */
 
-    'dashboard_url' => '/',
+	'dashboard_url' => '/',
 
-    'logout_url' => 'logout',
+	'logout_url' => 'logout',
 
-    'logout_method' => null,
+	'logout_method' => null,
 
-    'login_url' => 'login',
+	'login_url' => 'login',
 
-    'register_url' => 'register',
+	'register_url' => 'register',
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Menu Items
     |--------------------------------------------------------------------------
@@ -127,37 +127,70 @@ return [
     | layout. The 'can' is a filter on Laravel's built in Gate functionality.
     */
 
-    'menu' => [
-        ['header' => 'main_navigation'],
-        [
-						'text'        => 'Kelola Jadwal',
-						'url'					=> '#',
-            'icon'        => 'fas fa-fw fa-list-alt',
-        ],
-        [
-						'text'        => 'Kelola Siswa',
-						'url'					=> 'student',
-            'icon'        => 'fas fa-fw fa-users',
-        ],
-        [
-						'text'        => 'Kelola Nilai Siswa',
-						'url'					=> '#',
-            'icon'        => 'fas fa-fw fa-chart-line',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'profile',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-    ],
+	'menu' => [
+		['header' => 'main_navigation'],
+		[
+			'text'        => 'Kelola Pertemuan',
+			'url'					=> '#',
+			'icon'        => 'fas fa-fw fa-list-alt',
+			'can'					=> 'guru',
+		],
+		[
+			'text'        => 'Kelola Siswa',
+			'url'					=> 'student',
+			'icon'        => 'fas fa-fw fa-users',
+			'can'					=> 'guru',
+		],
+		[
+			'text'        => 'Kelola Nilai Siswa',
+			'url'					=> '#',
+			'icon'        => 'fas fa-fw fa-chart-line',
+			'can'					=> 'guru',
+		],
+		[
+			'text'        => 'Kelola Tahun Akademik',
+			'url'					=> 'akademik',
+			'icon'        => 'fas fa-fw fa-history',
+			'can'					=> 'pengurus',
+		],
+		[
+			'text'        => 'Kelola Mata Pelajaran',
+			'url'					=> 'matpel',
+			'icon'        => 'fas fa-fw fa-clipboard-list',
+			'can'					=> 'pengurus',
+		],
+		[
+			'text'        => 'Kelola Kelas',
+			'url'					=> 'kelas',
+			'icon'        => 'far fa-fw fa-calendar-alt',
+			'can'					=> 'pengurus',
+		],
+		[
+			'text'        => 'Kelola Guru',
+			'url'					=> '#',
+			'icon'        => 'fas fa-fw fa-chalkboard-teacher',
+			'can'					=> 'pengurus',
+		],
+		[
+			'text'        => 'Kelola Jadwal',
+			'url'					=> '#',
+			'icon'        => 'far fa-fw fa-calendar-alt',
+			'can'					=> 'pengurus',
+		],
+		['header' => 'account_settings'],
+		[
+			'text' => 'profile',
+			'url'  => 'profile',
+			'icon' => 'fas fa-fw fa-user',
+		],
+		[
+			'text' => 'change_password',
+			'url'  => 'profile/password',
+			'icon' => 'fas fa-fw fa-lock',
+		],
+	],
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Menu Filters
     |--------------------------------------------------------------------------
@@ -169,17 +202,17 @@ return [
     |
     */
 
-    'filters' => [
-        JeroenNoten\LaravelAdminLte\Menu\Filters\HrefFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\SearchFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\SubmenuFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
-    ],
+	'filters' => [
+		JeroenNoten\LaravelAdminLte\Menu\Filters\HrefFilter::class,
+		JeroenNoten\LaravelAdminLte\Menu\Filters\SearchFilter::class,
+		JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter::class,
+		JeroenNoten\LaravelAdminLte\Menu\Filters\SubmenuFilter::class,
+		JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
+		JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
+		JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
+	],
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Plugins Initialization
     |--------------------------------------------------------------------------
@@ -193,76 +226,76 @@ return [
     |
     */
 
-    'plugins' => [
-        [
-            'name' => 'Datatables',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js',
-                ],
-                [
-                    'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css',
-                ],
-            ],
-        ],
-        [
-            'name' => 'Select2',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
-                ],
-                [
-                    'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
-                ],
-            ],
-        ],
-        [
-            'name' => 'Chartjs',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
-                ],
-            ],
-        ],
-        [
-            'name' => 'Sweetalert2',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
-                ],
-            ],
-        ],
-        [
-            'name' => 'Pace',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
-                ],
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
-                ],
-            ],
-        ],
-    ],
+	'plugins' => [
+		[
+			'name' => 'Datatables',
+			'active' => true,
+			'files' => [
+				[
+					'type' => 'js',
+					'asset' => false,
+					'location' => '//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js',
+				],
+				[
+					'type' => 'css',
+					'asset' => false,
+					'location' => '//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css',
+				],
+			],
+		],
+		[
+			'name' => 'Select2',
+			'active' => true,
+			'files' => [
+				[
+					'type' => 'js',
+					'asset' => false,
+					'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
+				],
+				[
+					'type' => 'css',
+					'asset' => false,
+					'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
+				],
+			],
+		],
+		[
+			'name' => 'Chartjs',
+			'active' => true,
+			'files' => [
+				[
+					'type' => 'js',
+					'asset' => false,
+					'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+				],
+			],
+		],
+		[
+			'name' => 'Sweetalert2',
+			'active' => true,
+			'files' => [
+				[
+					'type' => 'js',
+					'asset' => false,
+					'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+				],
+			],
+		],
+		[
+			'name' => 'Pace',
+			'active' => true,
+			'files' => [
+				[
+					'type' => 'css',
+					'asset' => false,
+					'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
+				],
+				[
+					'type' => 'js',
+					'asset' => false,
+					'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+				],
+			],
+		],
+	],
 ];

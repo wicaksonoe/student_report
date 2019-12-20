@@ -3,10 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class ProfileLengkap
+class GuruMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,10 +16,11 @@ class ProfileLengkap
      */
     public function handle($request, Closure $next)
     {
-        $user = User::find(Auth::id());
-        if(empty($user->photo)) {
-            return redirect()->route('profile')->with('error', 'Mohon lengkapi data anda terlebih dahulu');
-        }
+			$user = Auth::user();
+			if ($user->role == 'guru') {
         return $next($request);
+			} else {
+				return abort(404);
+			}
     }
 }

@@ -1,9 +1,13 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+<h1>Selamat Datang {{ Auth::user()->name }}</h1>
 @stop
 
 @section('content')
-    <p>You are logged in!</p>
+	@can('guru', Auth::user())
+
+	@elsecan ('pengurus', Auth::user())
+		Halo Pengurus
+	@endcan
 @stop
