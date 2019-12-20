@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Group;
 use App\Student;
+use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -83,11 +84,6 @@ class StudentController extends Controller
 		],
 	];
 
-	public function __construct()
-	{
-		$this->middleware('auth');
-	}
-
 	public function index()
 	{
 		$input = $this->input;
@@ -145,11 +141,11 @@ class StudentController extends Controller
 		]);
 	}
 
-	public function showAll()
+	public function data()
 	{
 		$user = Auth::user();
 
-		$student_datas = Student::where('group_id', $user->group_id)
+		$student_datas = Student::where('group_id', $user->kelas->id)
 												->get(['id', 'nis', 'photo', 'name', 'tahun_masuk']);
 
 		return DataTables::of($student_datas)
@@ -177,7 +173,9 @@ class StudentController extends Controller
 	 */
 	public function show(Student $student)
 	{
-		return $student;
+		$data = collect($student);
+		$data->put('kelas', $student->kelas->nama_kelas);
+		return $data;
 	}
 
 	/**

@@ -16,8 +16,8 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
 						$table->increments('id');
 						$table->integer('group_id');
-            $table->string('nis');
-						$table->string('name');
+            $table->string('nis')->unique();
+						$table->string('name')->unique();
 						$table->string('jenis_kelamin');
             $table->year('tahun_masuk');
             $table->string('tempat_lahir');
@@ -27,7 +27,7 @@ class CreateStudentsTable extends Migration
             $table->string('no_hp_ortu');
             $table->text('alamat');
             $table->string('no_hp');
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }

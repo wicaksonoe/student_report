@@ -13,10 +13,10 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 				<h3 class="modal-title">Detail Siswa
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
 				</h3>
 			</div>
 			<div class="modal-body">
@@ -85,9 +85,12 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-10">
+			@if (isset($user->kelas->nama_kelas))	
 			<div class="box box-solid box-default">
 				<div class="box-header">
-					<h1 class="box-title">Daftar Siswa di Kelas {{$user->kelas->nama_kelas}}</h1>
+					<h1 class="box-title">Daftar Siswa di Kelas 
+							{{$user->kelas->nama_kelas}}
+					</h1>
 				</div>
 				<div class="box-body">
 					<div style="margin-bottom: 1rem">
@@ -111,6 +114,9 @@
 					</div>
 				</div>
 			</div>
+			@else
+			<h3>Anda belum menjadi wali kelas.</h3>
+			@endif
 		</div>
 	</div>
 </div>
@@ -222,8 +228,15 @@
 		$.get(
 			$(el).val(),
 			(response) => {
+				console.log(response)
 				try {
 					// populate data
+					$('#tabelBody').append(
+						'<tr>' +
+							'<td style="width: 20rem">Kelas</td>' +
+							'<td>' + response.kelas + '</td>' +
+						'</tr>'
+					);
 					$.each(response, (key, val) => {
 						let kolomNama;
 						let kolomIsi;
@@ -319,6 +332,7 @@
 		document.getElementById('modalSiswaForm').reset();
 		$('.form-control').parent().removeClass('has-error');
 		$('.error').remove();
+		modalSiswaTitle.html("Edit Data Siswa");
 
 		$.get(
 			$(el).val(),
