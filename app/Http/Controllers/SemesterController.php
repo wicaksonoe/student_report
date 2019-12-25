@@ -26,7 +26,7 @@ class SemesterController extends Controller
 			'tahun_akademik' => 
 				array(
 					'required',
-					'regex:/([0-9][0-9][0-9][0-9]\/[0-9][0-9][0-9][0-9])/',
+					'regex:/\d\d\d\d\/\d\d\d\d$/',
 					'unique:semesters,tahun_akademik'
 				)
 		]);
