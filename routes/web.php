@@ -79,3 +79,23 @@ Route::prefix('guru')
 		Route::get('/data/{method}', 'TeacherController@data');
 		Route::get('/message/{method}/{id}', 'TeacherController@message');
 	});
+
+Route::prefix('jadwal')
+	->middleware(['auth', 'pengurusMiddleware'])
+	->group(function() {
+		Route::prefix('jam')->group(function() {
+			Route::get('/', 'LessonHourController@index')->name('jadwal.jam.index');
+			Route::post('/', 'LessonHourController@store')->name('jadwal.jam.store');
+			Route::delete('/{id}', 'LessonHourController@destroy')->name('jadwal.jam.destroy');
+			Route::get('/data', 'LessonHourController@data');
+		});
+		Route::prefix('kelas')->group(function() {
+			Route::get('/', 'ScheduleController@index')->name('jadwal.kelas.index');
+			Route::post('/', 'ScheduleController@store')->name('jadwal.kelas.store');
+			Route::get('/edit/{id}', 'ScheduleController@edit')->name('jadwal.kelas.edit');
+			Route::post('/edit', 'ScheduleController@update')->name('jadwal.kelas.update');
+			Route::delete('/delete/{id}', 'ScheduleController@destroy')->name('jadwal.kelas.destroy');
+			Route::get('/data', 'ScheduleController@data');
+			Route::get('/data/matpel', 'ScheduleController@data_guru');
+		});
+	});

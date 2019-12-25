@@ -154,15 +154,15 @@ return [
 			'can'					=> 'pengurus',
 		],
 		[
-			'text'        => 'Kelola Mata Pelajaran',
-			'url'					=> 'matpel',
-			'icon'        => 'fas fa-fw fa-clipboard-list',
-			'can'					=> 'pengurus',
-		],
-		[
 			'text'        => 'Kelola Kelas',
 			'url'					=> 'kelas',
 			'icon'        => 'far fa-fw fa-calendar-alt',
+			'can'					=> 'pengurus',
+		],
+		[
+			'text'        => 'Kelola Mata Pelajaran',
+			'url'					=> 'matpel',
+			'icon'        => 'fas fa-fw fa-clipboard-list',
 			'can'					=> 'pengurus',
 		],
 		[
@@ -173,7 +173,7 @@ return [
 		],
 		[
 			'text'        => 'Kelola Jadwal',
-			'url'					=> '#',
+			'url'					=> 'jadwal/kelas',
 			'icon'        => 'far fa-fw fa-calendar-alt',
 			'can'					=> 'pengurus',
 		],
