@@ -90,7 +90,7 @@ class StudentController extends Controller
 		$user = Auth::user();
 		$kelas = Group::all();
 
-		return view('student.index', compact(['input', 'user', 'kelas']));
+		return view('guru.student', compact(['input', 'user', 'kelas']));
 	}
 
 	/**
