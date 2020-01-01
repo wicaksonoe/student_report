@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Group;
 use App\User;
 use App\Teacher;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class TeacherController extends Controller
 					$mata_pelajaran = Course::where('id', $id)->first();
 					return json_encode([
 						'status' => 'success',
-						'message' => 'Daftar Guru Untuk Mata Pelajaran '. $mata_pelajaran->nama_matpel
+						'message' => 'Daftar Guru Untuk Mata Pelajaran ' . $mata_pelajaran->nama_matpel
 					]);
 					break;
 
@@ -63,7 +64,7 @@ class TeacherController extends Controller
 					$nama_guru = User::where('id', $id)->first();
 					return json_encode([
 						'status' => 'success',
-						'message' => 'Daftar Mata Pelajaran Untuk '. $nama_guru->name
+						'message' => 'Daftar Mata Pelajaran Untuk ' . $nama_guru->name
 					]);
 					break;
 			}
@@ -76,20 +77,23 @@ class TeacherController extends Controller
 	{
 		$daftar_guru = User::where('role', 'guru')->get();
 		$daftar_mata_pelajaran = Course::all();
+		$daftar_kelas = Group::all();
 
-		return view('pengurus.guru', compact('daftar_guru', 'daftar_mata_pelajaran'));
+		return view('pengurus.guru', compact('daftar_guru', 'daftar_mata_pelajaran', 'daftar_kelas'));
 	}
 
 	public function store(Request $request)
 	{
 		$validateData = $request->validate([
 			'user_id'   => 'required|numeric',
-			'course_id' => 'required|numeric'
+			'course_id' => 'required|numeric',
+			'group_id' => 'required|numeric'
 		]);
 
 		$checking = Teacher::where([
 			'user_id'   => $request->user_id,
-			'course_id' => $request->course_id
+			'course_id' => $request->course_id,
+			'group_id' => $request->group_id
 		])->first();
 
 		if ($checking) {
@@ -113,24 +117,32 @@ class TeacherController extends Controller
 				case 'course_id':
 					$daftar = Teacher::where('course_id', $id);
 					return DataTables::of($daftar)
-						->addColumn('daftar', function($daftar) {
+						->addColumn('daftar', function ($daftar) {
 							return $daftar->guru->name;
 						})
-						->addColumn('action', function($daftar) {
+						->addColumn('action', function ($daftar) {
 							return '<button class="btn btn-sm btn-danger" onclick="destroy(this)" value="' . route('teacher.destroy', $daftar->id) . '">Hapus</button>';
 						})
+						->addColumn('kelas', function ($daftar) {
+							return $daftar->kelas->nama_kelas;
+						})
+						->rawColumns(['action'])
 						->make(true);
 					break;
 
 				case 'user_id':
 					$daftar = Teacher::where('user_id', $id);
 					return DataTables::of($daftar)
-						->addColumn('daftar', function($daftar) {
+						->addColumn('daftar', function ($daftar) {
 							return $daftar->mata_pelajaran->nama_matpel;
 						})
-						->addColumn('action', function($daftar) {
+						->addColumn('action', function ($daftar) {
 							return '<button class="btn btn-sm btn-danger" onclick="destroy(this)" value="' . route('teacher.destroy', $daftar->id) . '">Hapus</button>';
 						})
+						->addColumn('kelas', function ($daftar) {
+							return $daftar->kelas->nama_kelas;
+						})
+						->rawColumns(['action'])
 						->make(true);
 					break;
 			}
@@ -140,7 +152,7 @@ class TeacherController extends Controller
 	}
 
 	public function destroy(Teacher $id)
-	{ 
+	{
 		$id->delete();
 
 		return json_encode([

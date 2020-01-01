@@ -17,6 +17,7 @@ class CreateTeachersTable extends Migration
 						$table->increments('id');
 						$table->integer('user_id');
 						$table->integer('course_id');
+						$table->integer('group_id');
             $table->timestamps();
         });
     }

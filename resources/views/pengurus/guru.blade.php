@@ -21,6 +21,7 @@
 					<thead>
 						<tr>
 							<th id="colModal"></th>
+							<th>Kelas</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -62,6 +63,15 @@
 							<option selected disabled>-- Pilih Guru --</option>
 							@foreach ($daftar_guru as $guru)
 									<option value="{{ $guru->id }}">{{ $guru->name }}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="group_id">Mengajar Kelas</label>
+						<select name="group_id" id="group_id" class="form-control">
+							<option selected disabled>-- Pilih Kelas --</option>
+							@foreach ($daftar_kelas as $kelas)
+									<option value="{{ $kelas->id }}">{{ $kelas->nama_kelas }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -139,6 +149,7 @@
 			data       : {
 				'user_id'   : $('#user_id').val(),
 				'course_id'   : $('#course_id').val(),
+				'group_id'   : $('#group_id').val(),
 			},
 			dataType   : 'json',
 			success    : (res) => {
@@ -187,7 +198,8 @@
 			ajax      : el.value,
 			columns   : [
 					{width: '90%', data: 'daftar', name: 'daftar'},
-					{width: '10%', data: 'action', name: 'action', orderable: false, searchable: false},
+					{width: '5%', data: 'kelas', name: 'kelas'},
+					{width: '5%', data: 'action', name: 'action', orderable: false, searchable: false},
 				],
 			order: [
 					[0, 'asc']
