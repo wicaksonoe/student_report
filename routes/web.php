@@ -108,8 +108,8 @@ Route::prefix('pertemuan')
 		Route::get('/show', 'AttendanceReportController@show')->name('pertemuan.show');
 		Route::post('/edit', 'AttendanceReportController@update')->name('pertemuan.update');
 		Route::get('/data/matpel', 'AttendanceReportController@data_matpel');
-		Route::get('/data/notulensi/{teacher_id}', 'AttendanceReportController@data_notulensi');
-		Route::get('/message/notulensi/{teacher_id}', 'AttendanceReportController@message');
+		Route::get('/data/notulensi/{schedule_id}', 'AttendanceReportController@data_notulensi');
+		Route::get('/message/notulensi/{schedule_id}', 'AttendanceReportController@message');
 	});
 
 Route::prefix('nilai')

@@ -60,7 +60,7 @@
 			<div class="modal-body">
 				<form action="" method="post" id="form_notulensi">
 					<input type="text" name="id" id="id" hidden readonly>
-					<input type="text" name="teacher_id" id="teacher_id" hidden readonly>
+					<input type="text" name="schedule_id" id="schedule_id" hidden readonly>
 					<div class="form-group">
 						<label for="guru_pengganti">Guru Pengganti</label>
 						<select name="guru_pengganti" id="guru_pengganti" class="form-control">
@@ -179,7 +179,7 @@
 		$('#form_notulensi_judul').html('Tambah Notulensi Pertemuan');
 		$('#form_update').addClass('d-none');
 		$('#form_create').removeClass('d-none');
-		$('#teacher_id').val(id);
+		$('#schedule_id').val(id);
 		$('#pertemuan').removeAttr('readonly');
 		$('#form_notulensi_modal').modal('show');
 	}
@@ -219,7 +219,7 @@
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
 			data       : {
-				'teacher_id'    : $('#teacher_id').val(),
+				'schedule_id'    : $('#schedule_id').val(),
 				'guru_pengganti': $('#guru_pengganti').val(),
 				'jam_masuk'     : $('#jam_masuk').val(),
 				'jam_keluar'    : $('#jam_keluar').val(),
@@ -289,7 +289,7 @@
 			},
 			data       : {
 				'id'            : $('#id').val(),
-				'teacher_id'    : $('#teacher_id').val(),
+				'schedule_id'    : $('#schedule_id').val(),
 				'guru_pengganti': $('#guru_pengganti').val(),
 				'jam_masuk'     : $('#jam_masuk').val(),
 				'jam_keluar'    : $('#jam_keluar').val(),
@@ -301,7 +301,7 @@
 			dataType   : 'json',
 			success    : (res) => {
 				let elem = '#table_notulensi';
-				let url = '{{ url('pertemuan/data/notulensi') }}/' + res.teacher_id
+				let url = '{{ url('pertemuan/data/notulensi') }}/' + res.schedule_id
 				let columns = [
 					{width: '5%', data: 'pertemuan', name: 'pertemuan'},
 					{width: '10%', data: 'tgl_pertemuan', name: 'tgl_pertemuan'},

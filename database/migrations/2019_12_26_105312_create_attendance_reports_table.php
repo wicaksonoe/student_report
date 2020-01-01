@@ -15,7 +15,7 @@ class CreateAttendanceReportsTable extends Migration
     {
         Schema::create('attendance_reports', function (Blueprint $table) {
 						$table->increments('id');
-						$table->integer('teacher_id');
+						$table->integer('schedule_id');
 						$table->integer('guru_pengganti')->nullable();
 						$table->time('jam_masuk')->nullable();
 						$table->time('jam_keluar')->nullable();

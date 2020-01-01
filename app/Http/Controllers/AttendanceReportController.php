@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Attendance_report;
+use App\Schedule;
 use App\Teacher;
 use App\User;
 use Illuminate\Http\Request;
@@ -11,17 +12,19 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AttendanceReportController extends Controller
 {
-	public function message(Teacher $teacher_id)
+	public function message(Schedule $schedule_id)
 	{
 		return response()->json([
-			'message' => 'Notulensi '.$teacher_id->mata_pelajaran->nama_matpel.' Kelas '.$teacher_id->kelas->nama_kelas
+			'message' => 'Notulensi '.$schedule_id->pelajaran->mata_pelajaran->nama_matpel
+										.' Kelas '.$schedule_id->kelas->nama_kelas
+										.' ('.$schedule_id->semester->keterangan.' - '.$schedule_id->semester->tahun_akademik.')'
 		]);
 	}
 
-	public function data_notulensi($teacher_id)
+	public function data_notulensi($schedule_id)
 	{
 		$data_notulensi = [];
-		$notulensi = Attendance_report::where('teacher_id', $teacher_id)->get();
+		$notulensi = Attendance_report::where('schedule_id', $schedule_id)->get();
 
 		foreach ($notulensi as $key => $value) {
 			$data_notulensi[$key]['id']            = $value->id;
@@ -48,17 +51,23 @@ class AttendanceReportController extends Controller
 	public function data_matpel()
 	{
 		$data_matpel = [];
+		$user = Auth::user();
 
-		$user_id = Auth::user()->id;
-		$matpel = Teacher::where('user_id', $user_id)->get();
+		$jadwal = Schedule::all();
 
-		foreach ($matpel as $key => $value) {
-			$data_matpel[$key]['id'] = $value->id;
-			$data_matpel[$key]['nama_matpel'] = $value->mata_pelajaran->nama_matpel;
-			$data_matpel[$key]['kelas'] = $value->kelas->nama_kelas;
+		foreach ($jadwal as $key => $value) {
+			if ($value->pelajaran->user_id == $user->id) {
+				$data_matpel[$key]['id'] = $value->id;
+				$data_matpel[$key]['kelas'] = $value->kelas->nama_kelas;
+				$data_matpel[$key]['matpel'] = $value->pelajaran->mata_pelajaran->nama_matpel;
+				$data_matpel[$key]['semester'] = $value->semester->keterangan.' - '.$value->semester->tahun_akademik;
+			}
 		}
 
 		return DataTables::of($data_matpel)
+			->addColumn('nama_matpel', function ($data_matpel) {
+				return $data_matpel['matpel'].' ('.$data_matpel['semester'].')';
+			})
 			->addColumn('action', function ($data_matpel) {
 				return '<button class="btn btn-sm btn-primary" value="' . $data_matpel['id'] . '" onclick="show_notulensi(this.value)">Lihat notulensi</button>';
 			})
@@ -76,7 +85,7 @@ class AttendanceReportController extends Controller
 	public function store(Request $request)
 	{
 		$validatedData = $request->validate([
-			'teacher_id'     => 'required|numeric',
+			'schedule_id'     => 'required|numeric',
 			'jam_masuk'      => 'required',
 			'jam_keluar'     => 'required',
 			'pertemuan'      => 'required|numeric',
@@ -84,7 +93,7 @@ class AttendanceReportController extends Controller
 			'pokok_bahasan'  => 'required',
 		]);
 
-		$data_already_available = Attendance_report::where('teacher_id', $request->teacher_id)
+		$data_already_available = Attendance_report::where('schedule_id', $request->schedule_id)
 			->where('pertemuan', $request->pertemuan)
 			->get();
 
@@ -93,7 +102,7 @@ class AttendanceReportController extends Controller
 		}
 
 		Attendance_report::create([
-			'teacher_id'     => $request->teacher_id,
+			'schedule_id'     => $request->schedule_id,
 			'guru_pengganti' => $request->guru_pengganti,
 			'jam_masuk'      => $request->jam_masuk,
 			'jam_keluar'     => $request->jam_keluar,
@@ -105,7 +114,7 @@ class AttendanceReportController extends Controller
 
 		return json_encode([
 			'status'  => 'success',
-			'id'      => $request->teacher_id,
+			'id'      => $request->schedule_id,
 			'message' => 'Notulensi baru berhasil dibuat.'
 		]);
 	}
@@ -118,7 +127,7 @@ class AttendanceReportController extends Controller
 
 			if ($data) {
 				$return['id']             = $data->id;
-				$return['teacher_id']     = $data->teacher_id;
+				$return['schedule_id']     = $data->schedule_id;
 				$return['guru_pengganti'] = $data->guru_pengganti;
 				$return['jam_masuk']      = $data->jam_masuk;
 				$return['jam_keluar']     = $data->jam_keluar;
@@ -150,7 +159,7 @@ class AttendanceReportController extends Controller
 
 		Attendance_report::where('id', $request->id)
 			->update([
-				'teacher_id'     => $request->teacher_id,
+				'schedule_id'     => $request->schedule_id,
 				'guru_pengganti' => $request->guru_pengganti,
 				'jam_masuk'      => $request->jam_masuk,
 				'jam_keluar'     => $request->jam_keluar,
@@ -162,7 +171,7 @@ class AttendanceReportController extends Controller
 
 		return json_encode([
 			'status'  => 'success',
-			'teacher_id' => $request->teacher_id,
+			'schedule_id' => $request->schedule_id,
 			'message' => 'Notulensi berhasil diubah.'
 		]);
 	}

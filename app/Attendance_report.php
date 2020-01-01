@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Attendance_report extends Model
 {
 		protected $fillable = [
-			'teacher_id',
+			'schedule_id',
 			'guru_pengganti',
 			'jam_masuk',
 			'jam_keluar',
