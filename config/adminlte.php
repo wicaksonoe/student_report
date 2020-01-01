@@ -131,7 +131,7 @@ return [
 		['header' => 'main_navigation'],
 		[
 			'text'        => 'Kelola Pertemuan',
-			'url'					=> '#',
+			'url'					=> 'pertemuan',
 			'icon'        => 'fas fa-fw fa-list-alt',
 			'can'					=> 'guru',
 		],
