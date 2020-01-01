@@ -17,7 +17,7 @@ class AttendanceReportController extends Controller
 		return response()->json([
 			'message' => 'Notulensi '.$schedule_id->pelajaran->mata_pelajaran->nama_matpel
 										.' Kelas '.$schedule_id->kelas->nama_kelas
-										.' ('.$schedule_id->semester->keterangan.' - '.$schedule_id->semester->tahun_akademik.')'
+										.' ('.$schedule_id->semester->tahun_akademik.')'
 		]);
 	}
 
@@ -29,6 +29,7 @@ class AttendanceReportController extends Controller
 		foreach ($notulensi as $key => $value) {
 			$data_notulensi[$key]['id']            = $value->id;
 			$data_notulensi[$key]['pertemuan']     = $value->pertemuan;
+			$data_notulensi[$key]['semester']     = $value->semester;
 			$data_notulensi[$key]['tgl_pertemuan'] = date('d-M-Y', strtotime($value->tgl_pertemuan));
 			$data_notulensi[$key]['pokok_bahasan'] = $value->pokok_bahasan;
 			$data_notulensi[$key]['tugas']         = $value->tugas;
@@ -60,7 +61,7 @@ class AttendanceReportController extends Controller
 				$data_matpel[$key]['id'] = $value->id;
 				$data_matpel[$key]['kelas'] = $value->kelas->nama_kelas;
 				$data_matpel[$key]['matpel'] = $value->pelajaran->mata_pelajaran->nama_matpel;
-				$data_matpel[$key]['semester'] = $value->semester->keterangan.' - '.$value->semester->tahun_akademik;
+				$data_matpel[$key]['semester'] = $value->semester->tahun_akademik;
 			}
 		}
 
@@ -78,14 +79,19 @@ class AttendanceReportController extends Controller
 	public function index()
 	{
 		$daftar_guru = User::where('role', 'guru')->get();
+		$nama_semester = [
+			'Semester Ganjil',
+			'Semester Genap'
+		];
 
-		return view('guru.pertemuan', compact('daftar_guru'));
+		return view('guru.pertemuan', compact('daftar_guru', 'nama_semester'));
 	}
 
 	public function store(Request $request)
 	{
 		$validatedData = $request->validate([
 			'schedule_id'     => 'required|numeric',
+			'semester'      => 'required|string',
 			'jam_masuk'      => 'required',
 			'jam_keluar'     => 'required',
 			'pertemuan'      => 'required|numeric',
@@ -102,8 +108,9 @@ class AttendanceReportController extends Controller
 		}
 
 		Attendance_report::create([
-			'schedule_id'     => $request->schedule_id,
+			'schedule_id'    => $request->schedule_id,
 			'guru_pengganti' => $request->guru_pengganti,
+			'semester' 			 => $request->semester,
 			'jam_masuk'      => $request->jam_masuk,
 			'jam_keluar'     => $request->jam_keluar,
 			'pertemuan'      => $request->pertemuan,
@@ -127,8 +134,9 @@ class AttendanceReportController extends Controller
 
 			if ($data) {
 				$return['id']             = $data->id;
-				$return['schedule_id']     = $data->schedule_id;
+				$return['schedule_id']    = $data->schedule_id;
 				$return['guru_pengganti'] = $data->guru_pengganti;
+				$return['semester']			  = $data->semester;
 				$return['jam_masuk']      = $data->jam_masuk;
 				$return['jam_keluar']     = $data->jam_keluar;
 				$return['pertemuan']      = $data->pertemuan;
@@ -150,6 +158,7 @@ class AttendanceReportController extends Controller
 	{
 		$validatedData = $request->validate([
 			'id'						 => 'required|numeric',
+			'semester'       => 'required|string',
 			'jam_masuk'      => 'required',
 			'jam_keluar'     => 'required',
 			'pertemuan'      => 'required|numeric',
@@ -159,8 +168,9 @@ class AttendanceReportController extends Controller
 
 		Attendance_report::where('id', $request->id)
 			->update([
-				'schedule_id'     => $request->schedule_id,
+				'schedule_id'    => $request->schedule_id,
 				'guru_pengganti' => $request->guru_pengganti,
+				'semester'			 => $request->semester,
 				'jam_masuk'      => $request->jam_masuk,
 				'jam_keluar'     => $request->jam_keluar,
 				'pertemuan'      => $request->pertemuan,

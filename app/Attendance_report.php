@@ -9,6 +9,7 @@ class Attendance_report extends Model
 		protected $fillable = [
 			'schedule_id',
 			'guru_pengganti',
+			'semester',
 			'jam_masuk',
 			'jam_keluar',
 			'pertemuan',

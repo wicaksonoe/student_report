@@ -31,6 +31,7 @@
 					<thead>
 						<tr>
 							<th>Pertemuan</th>
+							<th>Semester</th>
 							<th>Tanggal Pertemuan</th>
 							<th>Pokok Bahasan & Tugas</th>
 							<th>Action</th>
@@ -70,6 +71,14 @@
 							@endforeach
 						</select>
 						<span class="help-block">*opsional</span>
+					</div>
+					<div class="form-group">
+						<label for="semester">Semester</label>
+						<select name="semester" id="semester" class="form-control">
+							@foreach ($nama_semester as $item)
+									<option value="{{ $item }}">{{ $item }}</option>
+							@endforeach
+						</select>
 					</div>
 					<div class="form-group">
 						<label for="jam_masuk">Jam Masuk</label>
@@ -163,11 +172,13 @@
 		let url = '{{ url('pertemuan/data/notulensi') }}/' + id
 		let columns = [
 			{width: '5%', data: 'pertemuan', name: 'pertemuan'},
-			{width: '10%', data: 'tgl_pertemuan', name: 'tgl_pertemuan'},
+			{width: '5%', data: 'semester', name: 'semester'},
+			{width: '5%', data: 'tgl_pertemuan', name: 'tgl_pertemuan'},
 			{width: '60%', data: 'bahasan', name: 'bahasan'},
 			{width: '25%', data: 'action', name: 'action', orderable: false, searchable: false},
 		];
-		loadData(elem, url, columns)
+		order = [1, 'asc'];
+		loadData(elem, url, columns, order);
 		$('#tambah_notulensi').val(id)
 		$('#notulensi').modal('show');
 	}
@@ -221,6 +232,7 @@
 			data       : {
 				'schedule_id'    : $('#schedule_id').val(),
 				'guru_pengganti': $('#guru_pengganti').val(),
+				'semester': $('#semester').val(),
 				'jam_masuk'     : $('#jam_masuk').val(),
 				'jam_keluar'    : $('#jam_keluar').val(),
 				'pertemuan'     : $('#pertemuan').val(),
@@ -233,12 +245,14 @@
 				let elem = '#table_notulensi';
 				let url = '{{ url('pertemuan/data/notulensi') }}/' + res.id
 				let columns = [
-					{width: '10%', data: 'pertemuan', name: 'pertemuan'},
-					{width: '20%', data: 'tgl_pertemuan', name: 'tgl_pertemuan'},
+					{width: '5%', data: 'pertemuan', name: 'pertemuan'},
+					{width: '5%', data: 'semester', name: 'semester'},
+					{width: '5%', data: 'tgl_pertemuan', name: 'tgl_pertemuan'},
 					{width: '50%', data: 'bahasan', name: 'bahasan'},
 					{width: '20%', data: 'action', name: 'action', orderable: false, searchable: false},
 				];
-				loadData(elem, url, columns);
+				order = [1, 'asc'];
+				loadData(elem, url, columns, order);
 				Swal.fire(
 					res.status,
 					res.message,
@@ -291,6 +305,7 @@
 				'id'            : $('#id').val(),
 				'schedule_id'    : $('#schedule_id').val(),
 				'guru_pengganti': $('#guru_pengganti').val(),
+				'semester': $('#semester').val(),
 				'jam_masuk'     : $('#jam_masuk').val(),
 				'jam_keluar'    : $('#jam_keluar').val(),
 				'pertemuan'     : $('#pertemuan').val(),
@@ -304,11 +319,13 @@
 				let url = '{{ url('pertemuan/data/notulensi') }}/' + res.schedule_id
 				let columns = [
 					{width: '5%', data: 'pertemuan', name: 'pertemuan'},
-					{width: '10%', data: 'tgl_pertemuan', name: 'tgl_pertemuan'},
+					{width: '5%', data: 'semester', name: 'semester'},
+					{width: '5%', data: 'tgl_pertemuan', name: 'tgl_pertemuan'},
 					{width: '60%', data: 'bahasan', name: 'bahasan'},
 					{width: '25%', data: 'action', name: 'action', orderable: false, searchable: false},
 				];
-				loadData(elem, url, columns)
+				order = [1, 'asc'];
+				loadData(elem, url, columns, order);
 				Swal.fire(
 					res.status,
 					res.message,

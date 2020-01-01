@@ -17,6 +17,7 @@ class CreateAttendanceReportsTable extends Migration
 						$table->increments('id');
 						$table->integer('schedule_id');
 						$table->integer('guru_pengganti')->nullable();
+						$table->string('semester');
 						$table->time('jam_masuk')->nullable();
 						$table->time('jam_keluar')->nullable();
 						$table->integer('pertemuan');
