@@ -123,7 +123,17 @@ class ScheduleController extends Controller
 												->first();
 
 		if ($data_is_exist) {
-			return abort(422, 'Gagal memproses data. Jadwal sudah ada.');
+			return abort(422, 'Gagal memproses data. Guru sudah memiliki jadwal di jam ini.');
+		}
+
+		$data_is_exist = Schedule::where('group_id', $request->group_id)
+												->where('hari', $request->hari)
+												->where('semester_id', $request->semester_id)
+												->where('lesson_hour_id', $request->lesson_hour_id)
+												->first();
+
+		if ($data_is_exist) {
+			return abort(422, 'Gagal memproses data. Kelas sudah memiliki jadwal di jam ini.');
 		}
 
 		Schedule::create([
@@ -176,6 +186,16 @@ class ScheduleController extends Controller
 			'hari'           => 'required|numeric',
 		]);
 
+		$data_is_exist = Schedule::where('teacher_id', $request->teacher_id)
+												->where('hari', $request->hari)
+												->where('semester_id', $request->semester_id)
+												->where('lesson_hour_id', $request->lesson_hour_id)
+												->first();
+
+		if ($data_is_exist) {
+			return abort(422, 'Gagal memproses data. Guru sudah memiliki jadwal di jam ini.');
+		}
+
 		$data_is_exist = Schedule::where('group_id', $request->group_id)
 												->where('hari', $request->hari)
 												->where('semester_id', $request->semester_id)
@@ -183,7 +203,7 @@ class ScheduleController extends Controller
 												->first();
 
 		if ($data_is_exist) {
-			return abort(422, 'Gagal memproses data. Jadwal sudah ada.');
+			return abort(422, 'Gagal memproses data. Kelas sudah memiliki jadwal di jam ini.');
 		}
 
 		Schedule::where('id', $request->id)
