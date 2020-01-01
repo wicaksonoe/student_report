@@ -18,4 +18,9 @@ class Group extends Model
 		{
 			return $this->hasMany('App\Student', 'group_id', 'id');
 		}
+
+		// public function mata_pelajaran()
+		// {
+		// 	return $this->hasMany('App\Teacher', 'group_id', 'id');
+		// }
 }

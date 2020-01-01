@@ -111,3 +111,13 @@ Route::prefix('pertemuan')
 		Route::get('/data/notulensi/{teacher_id}', 'AttendanceReportController@data_notulensi');
 		Route::get('/message/notulensi/{teacher_id}', 'AttendanceReportController@message');
 	});
+
+Route::prefix('nilai')
+	->middleware(['auth', 'guruMiddleware'])
+	->group(function() {
+		Route::get('/', 'ReportController@index')->name('nilai.index');
+		Route::post('/', 'ReportController@store')->name('nilai.store');
+		Route::get('/show', 'ReportController@show')->name('nilai.show');
+		Route::post('/update', 'ReportController@update')->name('nilai.update');
+		Route::get('/data', 'ReportController@data');
+	});
