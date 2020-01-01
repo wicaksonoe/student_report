@@ -27,11 +27,11 @@
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="semester_id">Semester</label>
+						<label for="semester_id">Tahun Akademik</label>
 						<select type="text" name="semester_id" id="semester_id" class="form-control" onchange="$('#hari').attr('disabled', false)" disabled="true">
-							<option disabled selected>-- Pilih Semester --</option>
+							<option disabled selected>-- Pilih Tahun Akademik --</option>
 							@foreach ($semester as $item)
-							<option value="{{ $item->id }}">{{ $item->keterangan.' - '.$item->tahun_akademik }}</option>
+							<option value="{{ $item->id }}">{{ $item->tahun_akademik }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -333,7 +333,7 @@
 			ajax      : '{{ url('jadwal/kelas/data?group_id=') }}' + param.value ,
 			columns   : [
 				{width: '10%', data: 'kelas', name: 'kelas'},
-				{width: '20%', data: 'semester', name: 'semester'},
+				{width: '20%', data: 'tahun_akademik', name: 'tahun_akademik'},
 				{width: '10%', data: 'hari', name: 'hari'},
 				{width: '10%', data: 'waktu', name: 'waktu'},
 				{width: '15%', data: 'mata_pelajaran', name: 'mata_pelajaran'},

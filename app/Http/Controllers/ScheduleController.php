@@ -61,7 +61,7 @@ class ScheduleController extends Controller
 		foreach ($data_jadwal as $key => $val) {
 			$daftar_jadwal[$key]['id']             = $val->id;
 			$daftar_jadwal[$key]['kelas']          = $val->kelas->nama_kelas;
-			$daftar_jadwal[$key]['semester']       = $val->semester->keterangan.' - '.$val->semester->tahun_akademik;
+			$daftar_jadwal[$key]['tahun_akademik'] = $val->semester->tahun_akademik;
 			$daftar_jadwal[$key]['hari']           = $this->convert_hari($val->hari);
 			$daftar_jadwal[$key]['waktu']          = $val->jam_pelajaran->waktu;
 			$daftar_jadwal[$key]['mata_pelajaran'] = $val->pelajaran->mata_pelajaran->nama_matpel;
@@ -98,7 +98,7 @@ class ScheduleController extends Controller
 	public function index()
 	{
 		$kelas = Group::all(['id', 'nama_kelas']);
-		$semester = Semester::where('keterangan', 'NOT LIKE', 'Mid-semester%')->orderBy('tahun_akademik', 'desc')->get();
+		$semester = Semester::all();
 		$waktu = Lesson_hour::all();
 		$mata_pelajaran = Course::all(['id', 'nama_matpel']);
 
@@ -194,16 +194,6 @@ class ScheduleController extends Controller
 
 		if ($data_is_exist) {
 			return abort(422, 'Gagal memproses data. Guru sudah memiliki jadwal di jam ini.');
-		}
-
-		$data_is_exist = Schedule::where('group_id', $request->group_id)
-												->where('hari', $request->hari)
-												->where('semester_id', $request->semester_id)
-												->where('lesson_hour_id', $request->lesson_hour_id)
-												->first();
-
-		if ($data_is_exist) {
-			return abort(422, 'Gagal memproses data. Kelas sudah memiliki jadwal di jam ini.');
 		}
 
 		Schedule::where('id', $request->id)
