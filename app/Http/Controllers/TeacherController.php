@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Course;
-use App\Group;
 use App\User;
 use App\Teacher;
 use Illuminate\Http\Request;
@@ -77,9 +76,8 @@ class TeacherController extends Controller
 	{
 		$daftar_guru = User::where('role', 'guru')->get();
 		$daftar_mata_pelajaran = Course::all();
-		$daftar_kelas = Group::all();
 
-		return view('pengurus.guru', compact('daftar_guru', 'daftar_mata_pelajaran', 'daftar_kelas'));
+		return view('pengurus.guru', compact('daftar_guru', 'daftar_mata_pelajaran'));
 	}
 
 	public function store(Request $request)
@@ -87,13 +85,11 @@ class TeacherController extends Controller
 		$validateData = $request->validate([
 			'user_id'   => 'required|numeric',
 			'course_id' => 'required|numeric',
-			'group_id' => 'required|numeric'
 		]);
 
 		$checking = Teacher::where([
 			'user_id'   => $request->user_id,
 			'course_id' => $request->course_id,
-			'group_id' => $request->group_id
 		])->first();
 
 		if ($checking) {
@@ -123,9 +119,6 @@ class TeacherController extends Controller
 						->addColumn('action', function ($daftar) {
 							return '<button class="btn btn-sm btn-danger" onclick="destroy(this)" value="' . route('teacher.destroy', $daftar->id) . '">Hapus</button>';
 						})
-						->addColumn('kelas', function ($daftar) {
-							return $daftar->kelas->nama_kelas;
-						})
 						->rawColumns(['action'])
 						->make(true);
 					break;
@@ -138,9 +131,6 @@ class TeacherController extends Controller
 						})
 						->addColumn('action', function ($daftar) {
 							return '<button class="btn btn-sm btn-danger" onclick="destroy(this)" value="' . route('teacher.destroy', $daftar->id) . '">Hapus</button>';
-						})
-						->addColumn('kelas', function ($daftar) {
-							return $daftar->kelas->nama_kelas;
 						})
 						->rawColumns(['action'])
 						->make(true);
