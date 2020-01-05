@@ -117,7 +117,8 @@ Route::prefix('nilai')
 	->group(function() {
 		Route::get('/', 'ReportController@index')->name('nilai.index');
 		Route::post('/', 'ReportController@store')->name('nilai.store');
-		Route::get('/show', 'ReportController@show')->name('nilai.show');
+		Route::post('/cetak', 'ReportController@print')->name('nilai.print');
 		Route::post('/update', 'ReportController@update')->name('nilai.update');
-		Route::get('/data', 'ReportController@data');
+		Route::get('/data/siswa', 'ReportController@data_siswa');
+		Route::get('/data/raport', 'ReportController@data_nilai');
 	});

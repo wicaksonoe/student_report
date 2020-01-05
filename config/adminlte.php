@@ -143,7 +143,7 @@ return [
 		],
 		[
 			'text'        => 'Kelola Nilai Siswa',
-			'url'					=> '#',
+			'url'					=> 'nilai',
 			'icon'        => 'fas fa-fw fa-chart-line',
 			'can'					=> 'guru',
 		],

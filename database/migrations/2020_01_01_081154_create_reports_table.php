@@ -16,9 +16,10 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
 						$table->increments('id');
 						$table->integer('student_id');
-						$table->integer('group_id');
 						$table->integer('semester_id');
 						$table->integer('teacher_id');
+						$table->integer('group_id');
+						$table->string('semester');
 						$table->integer('nilai');
             $table->timestamps();
         });
