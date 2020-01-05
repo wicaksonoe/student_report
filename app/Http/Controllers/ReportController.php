@@ -187,6 +187,8 @@ class ReportController extends Controller
 			];
 		}
 
+		ksort($data['rekap_nilai']);
+
 		$pdf = PDF::loadView('guru.cetak_report', compact('data'));
 		
 		$nama_file = 'raport_';
